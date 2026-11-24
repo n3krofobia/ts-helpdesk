@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk</title>
+
+</head>
+<body>
+    <div id="mainBlock">
+        <div id="formBlock">
+            <form id="helpdeskForm">
+                <label for="title">Title: </label>
+                <input type="text" id="title">
+                <label for="priority">Priority:</label>
+                <select id="priority">
+                    <option value="low" selected="selected">Low</option>
+                    <option value="normal">Normal</option>
+                    <option value="high">High</option>
+                </select><br>
+                <p id="feedback"></p>
+                <button type="submit" id="submitButton">Enter</button>
+                
+                <label for="importInput" id="importLabel">Import</label>
+                <input type="file" id="importInput" name="Import" accept=".json,.csv,.xml" hidden>
+                <span id="exportLabel">Export (testing)</span>
+            </form>
+        </div>
+        <div id="results">
+            <label for="status" id="statusLabel">Filter by status</label>
+            <select id="status">
+                <option value="all">All</option>
+                <option value="new" selected="selected">New</option>
+                <option value="doing">Doing</option>
+                <option value="done">Done</option>
+            </select>
+            <p id="showingLabel">Showing <span id="showing">0</span>/<span id="totalTickets">0</span> tickets</p>
+            <div id="list"></div>
+        </div>
+    </div>
+    
+
+</body>
+</html>

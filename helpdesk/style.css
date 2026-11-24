@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#formBlock {
+    width: 450px;
+    height: auto;
+    border: black 1px solid;
+    border-radius: 10px;
+    padding: 20px;
+    line-height: 40px;
+    font-size: larger;
+}
+
+html, body {
+    overflow: hidden; 
+}
+
+#mainBlock{
+    width: 100vw;
+    height: 100vh;
+    margin: 30px;
+}
+
+#submitButton {
+    border-radius: 3px;
+    padding: 2px 10px 2px 10px;
+    font-size: medium;
+    cursor: pointer;
+}
+
+#results {
+    margin: 20px;
+    margin-left: 0;
+}
+
+#statusLabel {
+    font-size: large;
+}
+
+.ticketDiv {
+    margin-top: 10px;
+    border: darkgrey solid 2px;
+    border-radius: 3px;
+    padding: 10px;
+    width: 100%;
+}
+
+.ticketTitle {
+    font-weight: bold;
+    font-size: x-large;
+    padding-bottom: 5px;
+}
+
+#showingLabel {
+    font-size: smaller;
+    color: gray;
+}
+
+.removeLabel {
+    color: red;
+    font-size: smaller;
+    cursor: pointer;
+}
+.removeLabel:hover {
+    text-decoration: underline;
+}
+
+#feedback {
+    font-size: smaller;
+    color: red;
+}
+
+#list {
+    overflow-y: auto;
+    width: max(50%, 450px);
+    height: 70vh;
+}
+
+#importLabel:hover, #exportLabel:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
