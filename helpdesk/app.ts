@@ -1,6 +1,13 @@
 import { Helpdesk, feedbackLabel } from './helpdesk.js';
+import type {Ticket, Priority } from './ticket.js';
 
-document.getElementById("title").focus();
+const titleInput = document.getElementById("title") as HTMLInputElement;
+const prioritySelect = document.getElementById("priority") as HTMLSelectElement;
+const submitButton = document.getElementById("submitButton") as HTMLButtonElement;
+const exportLabel = dcoument.getElementById("exportLabel") as HTMLSpanElement;
+const fileInput = document.getElementById("importInput") as HTMLInputElement;
+
+titleInput.focus();
 
 const helpdesk = new Helpdesk();
 
