@@ -1,50 +1,33 @@
 import { Helpdesk, feedbackLabel } from './helpdesk.js';
 import type {Ticket, Priority } from './ticket.js';
 
-const titleInput = document.getElementById("title") as HTMLInputElement;
-const prioritySelect = document.getElementById("priority") as HTMLSelectElement;
-const submitButton = document.getElementById("submitButton") as HTMLButtonElement;
-const exportLabel = dcoument.getElementById("exportLabel") as HTMLSpanElement;
-const fileInput = document.getElementById("importInput") as HTMLInputElement;
-
-titleInput.focus();
+(document.getElementById("title") as HTMLInputElement).focus();
 
 const helpdesk = new Helpdesk();
 
 helpdesk.renderTickets();
 
-function handleSubmit(e: MouseEvent): void {
-    e.preventDefault();
-    feedbackLabel1.textContent = "";
-
-    const title: string = titleInput.value.trim();
-
-    if(title.length < 3 || title.lenght < 30) {
-
-    }
-}
-
-document.getElementById("submitButton").addEventListener('click', (e) => {
+(document.getElementById("submitButton") as HTMLButtonElement).addEventListener('click', (e : MouseEvent) => {
     e.preventDefault(); // prevents reload on enter
 
     feedbackLabel.textContent = "";
 
-    let title: string= document.getElementById("title").value.trim();
+    let title: string = (document.getElementById("title") as HTMLInputElement).value.trim();
 
     if (title.length < 3 || title.length > 80) {
         feedbackLabel.textContent = "tickets title must have between 3 and 80 characters";
         return;
     }
 
-    let ticket = {
+    let ticket: Ticket = {
         id: helpdesk.currentId++,
         title: title,
-        priority: document.getElementById("priority").value,
+        priority: (document.getElementById("priority") as HTMLSelectElement).value as Priority,
         status: "new"
     }
 
-    document.getElementById("title").value = "";
-    document.getElementById("priority").value = "low";
+    (document.getElementById("title") as HTMLInputElement).value = "";
+    (document.getElementById("priority") as HTMLSelectElement).value = "low";
 
     helpdesk.addTicket(ticket);
 
@@ -55,11 +38,11 @@ helpdesk.statusElement.addEventListener('change', () => {
     helpdesk.renderTickets();
 });
 
-const fileInput = document.getElementById("importInput");
+const fileInput = document.getElementById("importInput") as HTMLInputElement;
 
 // async lets us use await while the selected file is being read.
-async function handleImport(event) {
-    const file = event.target.files[0];
+async function handleImport(event: Event): Promise<void> {
+    const file = (event.target as HTMLInputElement).files[0];
 
     if (!file) {
         return;
@@ -67,7 +50,7 @@ async function handleImport(event) {
 
     try {
         // file.text() returns a Promise with the file's text.
-        const importData: Partial<StoredData> = await file.text();
+        const importData: string = await file.text();
 
         alert(helpdesk.import(importData));
     }
@@ -80,7 +63,7 @@ async function handleImport(event) {
     fileInput.value = "";
 }
 
-fileInput.addEventListener("change", (event) => {
+fileInput.addEventListener("change", (event: Events) => {
     handleImport(event);
 });
 
