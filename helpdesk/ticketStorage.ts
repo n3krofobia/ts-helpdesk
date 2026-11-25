@@ -7,12 +7,12 @@ interface StoredData {
 
 export class TicketStorage {
 
-    storageKey: string = "";
-    tickets: Ticket[] = [];
-    currentId: number = 1;
+    storageKey!: string = "";
+    tickets!: Ticket[] = [];
+    currentId!: number = 1;
 
     saveToStorage(): void{
-        const data: StoredData= {
+        const data: StoredData = {
             tickets: this.tickets,
             currentId: this.currentId
         };
@@ -21,7 +21,7 @@ export class TicketStorage {
     }
 
     loadFromStorage(): void{
-        const raw: string | null = localStorage.getItem(this.storageKey);
+        const raw = localStorage.getItem(this.storageKey);
         if (!raw) return;   
 
         try {
