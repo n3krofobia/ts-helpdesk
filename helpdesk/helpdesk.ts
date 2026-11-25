@@ -1,20 +1,22 @@
 import { priorityOrder, statuses } from './ticket.js';
 import { TicketRenderer } from './ticketRender.js';
+import { Ticket, Status } from '.ticket.js';
 
-export const feedbackLabel = document.getElementById("feedback");
+export const feedbackLabel = document.getElementById("feedback") as HTMLParagraphElement;
 
 export class Helpdesk extends TicketRenderer {
+    statusElement: HTMLSelectElement;
+    ticketList: HTMLDivElement;
+
     constructor() {
         super();
         this.storageKey = "helpdeskData";
-        this.tickets = [];
-        this.currentId = 1;
-        this.statusElement = document.getElementById("status");
-        this.ticketList = document.getElementById("list");
+        this.statusElement = document.getElementById("status") as HTMLSelectElement;
+        this.ticketList = document.getElementById("list") as HTMLDivElement;
         this.loadFromStorage();
     }
 
-    addTicket(ticket) {
+    addTicket(ticket: Ticket): boolean {
         feedbackLabel.textContent = "";
 
         if (this.tickets.length < 1000) {
@@ -31,9 +33,9 @@ export class Helpdesk extends TicketRenderer {
         return this.tickets;
     }
 
-    removeTicket(id) {
-        let left = 0,
-            right = this.tickets.length - 1;
+    removeTicket(id: number): boolean {
+        let left: number = 0,
+            right: number = this.tickets.length - 1;
 
         while (left <= right) {
             let pivot = Math.floor((left + right) / 2);
@@ -55,11 +57,11 @@ export class Helpdesk extends TicketRenderer {
         return false;
     }
 
-    getTicketAmount() {
+    getTicketAmount(): number {
         return this.tickets.length;
     }
 
-    filterTicketsByStatus(status) {
+    filterTicketsByStatus(status: string): Ticket[] {
         if (status === "all")
             return this.tickets;
 
@@ -70,8 +72,8 @@ export class Helpdesk extends TicketRenderer {
         return this.tickets.filter(ticket => ticket.status === status);
     }
 
-    import(importData) {
-        let data;
+    import(importData: string): string {
+        let data: unknown;
 
         try {
             data = JSON.parse(importData);

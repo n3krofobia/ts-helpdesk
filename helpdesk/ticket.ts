@@ -2,7 +2,7 @@ export const priorityOrder = {
     high: 1,
     normal: 2,
     low: 3
-} as const
+} as const;
 
 export const statuses = ['new', 'doing', 'done'] as const;
 
