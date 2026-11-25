@@ -13,12 +13,23 @@ const helpdesk = new Helpdesk();
 
 helpdesk.renderTickets();
 
+function handleSubmit(e: MouseEvent): void {
+    e.preventDefault();
+    feedbackLabel1.textContent = "";
+
+    const title: string = titleInput.value.trim();
+
+    if(title.length < 3 || title.lenght < 30) {
+
+    }
+}
+
 document.getElementById("submitButton").addEventListener('click', (e) => {
     e.preventDefault(); // prevents reload on enter
 
     feedbackLabel.textContent = "";
 
-    let title = document.getElementById("title").value.trim();
+    let title: string= document.getElementById("title").value.trim();
 
     if (title.length < 3 || title.length > 80) {
         feedbackLabel.textContent = "tickets title must have between 3 and 80 characters";
@@ -56,7 +67,7 @@ async function handleImport(event) {
 
     try {
         // file.text() returns a Promise with the file's text.
-        const importData = await file.text();
+        const importData: Partial<StoredData> = await file.text();
 
         alert(helpdesk.import(importData));
     }
