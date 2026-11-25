@@ -11,6 +11,8 @@ export class Helpdesk extends TicketRenderer {
     constructor() {
         super();
         this.storageKey = "helpdeskData";
+        this.tickets = [];
+        this.currentId = 1;
         this.statusElement = document.getElementById("status") as HTMLSelectElement;
         this.ticketList = document.getElementById("list") as HTMLDivElement;
         this.loadFromStorage();
@@ -29,7 +31,7 @@ export class Helpdesk extends TicketRenderer {
         return false;
     }
 
-    getTickets() {
+    getTickets(): Ticket[] {
         return this.tickets;
     }
 
@@ -65,7 +67,7 @@ export class Helpdesk extends TicketRenderer {
         if (status === "all")
             return this.tickets;
 
-        if (!(statuses.includes(status))) {
+        if (!(statuses.includes(status as Status))) {
             return [];
         }
 
@@ -73,7 +75,7 @@ export class Helpdesk extends TicketRenderer {
     }
 
     import(importData: string): string {
-        let data: unknown;
+        let data: any;
 
         try {
             data = JSON.parse(importData);
@@ -112,7 +114,7 @@ export class Helpdesk extends TicketRenderer {
         }
 
         // Keep tickets in ID order because removeTicket uses binary search.
-        data.sort((a, b) => a.id - b.id);
+        data.sort((a: Ticket, b: Ticket) => a.id - b.id);
 
         for (let i = 1; i < data.length; i++) {
             if (data[i].id === data[i - 1].id)
