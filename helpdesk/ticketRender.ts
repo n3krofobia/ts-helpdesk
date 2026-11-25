@@ -1,14 +1,21 @@
 import { priorityOrder } from './ticket.js';
+import type {Ticket, Status} from './ticket.js';
 import { TicketStorage } from './ticketStorage.js';
 
-export class TicketRenderer extends TicketStorage {
-    renderTickets() {
+export abstract class TicketRenderer extends TicketStorage {
+
+    abstract ticketList: HTMLDivElement;
+    abstract statusElement: HTMLSelectElement;
+    abstract filterTicketsByStatus(status: string): Ticket[];
+    abstract removeTicket(id: number): boolean;
+
+    renderTickets(): void{
         this.ticketList.innerHTML = "";
 
-        let filteredTickets = this.filterTicketsByStatus(this.statusElement.value);
+        let filteredTickets: Ticket[] = this.filterTicketsByStatus(this.statusElement.value);
 
         // Sort a copy so the original tickets stay in ID order.
-        let sortedTickets = [...filteredTickets].sort(
+        let sortedTickets: Ticket[] = [...filteredTickets].sort(
             (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]
         );
 
@@ -16,15 +23,15 @@ export class TicketRenderer extends TicketStorage {
             this.createTicketDiv(ticket);
         });
 
-        document.getElementById("showing").textContent = sortedTickets.length;
-        document.getElementById("totalTickets").textContent = this.tickets.length;
+        (document.getElementById("showing") as HTMLSpanElement).textContent = String(sortedTickets.length);
+        (document.getElementById("totalTickets") as HTMLSpanElement).textContent = String(this.tickets.length);
 
         if (sortedTickets.length === 0) {
             this.ticketList.textContent = "no tickets to show!";
         }
     }
 
-    createTicketDiv(ticket) {
+    createTicketDiv(ticket: Ticket): void {
         let newTicketDiv = document.createElement("div");
         newTicketDiv.id = ticket.id;
         newTicketDiv.className = "ticketDiv";
@@ -69,7 +76,7 @@ export class TicketRenderer extends TicketStorage {
         this.ticketList.appendChild(newTicketDiv);
 
         statusSelect.addEventListener("change", () => {
-            ticket.status = statusSelect.value;
+            ticket.status = statusSelect.value as Status;
             this.saveToStorage();
         });
 

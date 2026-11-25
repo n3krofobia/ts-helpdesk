@@ -1,5 +1,5 @@
 import { priorityOrder, statuses } from './ticket.js';
-import { TicketRenderer } from './ticketRender.js';
+import type { TicketRenderer } from './ticketRender.js';
 import { Ticket, Status } from '.ticket.js';
 
 export const feedbackLabel = document.getElementById("feedback") as HTMLParagraphElement;
